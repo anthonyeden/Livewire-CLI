@@ -17,8 +17,13 @@ import LivewireCLILogging
 
 if __name__ == "__main__":
 
+    description = "Livewire Command Line Interface (CLI). " + "\r\n"
+    description += __copyright__ + ". \r\n"
+    description += "Version " + __version__ + ". \r\n"
+    description += "This software is sold under a proprietary license. Please purchase a license from https://mediarealm.com.au/. " + "\r\n"
+
     # Setup Argparser
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=description)
 
     # Default connection parameters
     parser.add_argument("lwrp_ip", help="Enter the IP Address of your LWRP Device")
