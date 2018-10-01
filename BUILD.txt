@@ -1,0 +1,14 @@
+Simple build instructions:
+------------------------------------------------------------------------
+
+Ensure you have PyInstaller installed
+Ensure you have 32-bit Python 2.7 installed
+
+Delete build/ & dist/
+
+Run:
+ - pyinstaller -p libs -i ConnectorIcon.ico --version-file=version.py --onefile Livewire-CLI.py 
+
+ - "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\signtool.exe" sign /tr http://timestamp.digicert.com /td sha256 /fd sha256 /f SigningCert.pfx /p "------PASSWORD------" Livewire-CLI.exe
+
+Distribute the EXE as needed
