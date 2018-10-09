@@ -4,7 +4,7 @@ __author__ = "Media Realm"
 __copyright__ = "Copyright 2015-2018, Anthony Eden / Media Realm"
 __credits__ = ["Anthony Eden"]
 __license__ = "Proprietary"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 import os, sys
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/libs")
@@ -94,6 +94,9 @@ if __name__ == "__main__":
     if args.lwrp_password:
         LivewireCLILogging.info("Attempting to login with password", args.lwrp_password)
         device.login(args.lwrp_password)
+    else:
+        LivewireCLILogging.info("Attempting to login without password")
+        device.login()
 
     # Source information
     if args.sourcenum and (args.get_name or args.get_ch or args.get_chlw or args.get_chlwtype):
@@ -221,5 +224,6 @@ if __name__ == "__main__":
             device.setGPO(args.gpio_port_num, args.gpio_pin_num, returnState)
 
     # Disconnect from the LWRP
+    time.sleep(0.4)
     device.stop()
     sys.exit(0)

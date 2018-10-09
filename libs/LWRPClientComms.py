@@ -3,12 +3,14 @@
 import socket
 import time
 import threading
+import logging
+logger = logging.getLogger(__name__)
 
 __author__ = "Anthony Eden"
 __copyright__ = "Copyright 2015-2018, Anthony Eden / Media Realm"
 __credits__ = ["Anthony Eden"]
 __license__ = "GPL"
-__version__ = "0.6"
+__version__ = "0.6-loggingpatch"
 
 
 class LWRPClientComms(threading.Thread):
@@ -30,6 +32,8 @@ class LWRPClientComms(threading.Thread):
         self._stop = False
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        logger.info("Attempting to connect: " + str(host) + ":" + str(port))
 
         self.sock.connect((host, port))
         self.sock.setblocking(0)
@@ -56,6 +60,7 @@ class LWRPClientComms(threading.Thread):
                 dataToSend = self.sendQueue[0]
 
                 while dataToSend:
+                    logger.info("Sending command: " + str(dataToSend))
                     sent = self.sock.send(dataToSend)
                     dataToSend = dataToSend[sent:]
 
