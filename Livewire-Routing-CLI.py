@@ -1,4 +1,4 @@
-"""Livewire CLI: A command line interface for Livewire Routing Protocol Devices"""
+"""Livewire Routing CLI: A command line interface for Livewire Routing Protocol Devices"""
 
 __author__ = "Media Realm"
 __copyright__ = "Copyright 2015-2018, Anthony Eden / Media Realm"
@@ -17,7 +17,7 @@ import LivewireCLILogging
 
 if __name__ == "__main__":
 
-    description = "Livewire Command Line Interface (CLI). " + "\r\n"
+    description = "Livewire Routing Command Line Interface (CLI). " + "\r\n"
     description += __copyright__ + ". \r\n"
     description += "Version " + __version__ + ". \r\n"
     description += "This software is sold under a proprietary license. Please purchase a license from https://mediarealm.com.au/. " + "\r\n"
