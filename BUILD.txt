@@ -7,10 +7,10 @@ Ensure you have 32-bit Python 2.7 installed
 Delete build/ & dist/
 
 Run:
- - pyinstaller -p libs -i ConnectorIcon.ico --version-file=version.py --onefile Livewire-Routing-CLI.py 
- - pyinstaller -p libs -i ConnectorIcon.ico --version-file=version.py --onefile Livewire-Control-CLI.py 
+ - pyinstaller -p libs -i ConnectorIcon.ico --version-file=version_lwrp.py --onefile Livewire-Routing-CLI.py 
+ - pyinstaller -p libs -i ConnectorIcon.ico --version-file=version_lwcp.py --onefile Livewire-Control-CLI.py 
 
  - "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\signtool.exe" sign /tr http://timestamp.digicert.com /td sha256 /fd sha256 /f SigningCert.pfx /p "------PASSWORD------" Livewire-Routing-CLI.exe
  - "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\signtool.exe" sign /tr http://timestamp.digicert.com /td sha256 /fd sha256 /f SigningCert.pfx /p "------PASSWORD------" Livewire-Control-CLI.exe
 
-Distribute the EXEs as needed
+ZIP and Distribute the EXEs as needed
