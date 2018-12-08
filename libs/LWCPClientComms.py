@@ -3,6 +3,8 @@
 import socket
 import time
 import threading
+import xmltodict
+import json
 
 __author__ = "Anthony Eden"
 __copyright__ = "Copyright 2015-2018, Anthony Eden / Media Realm"
@@ -268,8 +270,15 @@ class LWCPClientComms(threading.Thread):
                     attrs["ChannelOn"] = False
 
             elif x[:12] == "ShowProfList":
-                # TODO: Parse this as XML
                 attrs['profile_list'] = x[13:].strip()
+                attrs['profile_list'] = json.loads(json.dumps(xmltodict.parse(attrs['profile_list'])))
+
+                profile_list = []
+                if 'list' in attrs['profile_list'] and 'showprofile' in attrs['profile_list']['list']:
+                    for profile in attrs['profile_list']['list']['showprofile']:
+                        profile_list.append(profile)
+                
+                attrs['profile_list'] = profile_list
 
             elif x[:10] == "ShowProfID":
                 attrs['profile_id'] = int(x[11:].strip())
@@ -281,8 +290,15 @@ class LWCPClientComms(threading.Thread):
                 attrs['profile_status'] = x[13:].strip()
             
             elif x[:8] == "src_list":
-                # TODO: Parse this as XML
                 attrs['source_list'] = x[9:].strip()
+                attrs['source_list'] = json.loads(json.dumps(xmltodict.parse(attrs['source_list'])))
+
+                source_list = []
+                if 'list' in attrs['source_list'] and 'src' in attrs['source_list']['list']:
+                    for source in attrs['source_list']['list']['src']:
+                        source_list.append(source)
+                
+                attrs['source_list'] = source_list
             
             elif x[:6] == "src_id":
                 attrs['source_id'] = int(x[7:].strip())
