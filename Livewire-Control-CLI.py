@@ -54,6 +54,13 @@ if __name__ == "__main__":
     parser.add_argument('--set_channelbus_pgm4', type=str, choices=["ON", "OFF"], help="Change the PGM1 Bus Assignment for the currently selected channel")
     parser.add_argument('--set_channelbus_prev', type=str, choices=["ON", "OFF"], help="Change the PGM1 Bus Assignment for the currently selected channel")
 
+    # VMix
+    parser.add_argument("--vmix_num", type=int, help="Enter the VMix number you wish to control")
+    parser.add_argument("--vmix_chnum", type=int, help="Enter the VMix Channel number you wish to control")
+    parser.add_argument('--get_vmixstate', default=False, action='store_true', help="Get the on/off state of the currently selected VMix channel")
+    parser.add_argument('--set_vmixstate', type=str, choices=["ON", "OFF"], help="Change the on/off state for the currently selected VMix channel")
+    parser.add_argument('--get_vmixgain', default=False, action='store_true', help="Get the on/off state of the currently selected VMix channel")
+    parser.add_argument('--set_vmixgain', type=int, help="Set the gain level for the currently selected VMix channel")
 
     # Logging parameters
     parser.add_argument('--debug', default=False, action='store_true', help="Specify this option to see debug/error output on the console")
@@ -223,6 +230,33 @@ if __name__ == "__main__":
             device.setChannelBus(chnum, None, None, None, None, True, chtype)
         elif args.set_channelbus_prev and args.set_channelbus_prev == "OFF":
             device.setChannelBus(chnum, None, None, None, None, False, chtype)
+
+    # Actions to do with vmixes (Studio Engine only - not QOR)
+    if args.vmix_num and args.vmix_chnum:
+
+        # VMix - On/Off State Get
+        if args.get_vmixstate:
+            vmix = device.getVMixChannelState(args.vmix_num, args.vmix_chnum)
+            if vmix is not None and len(vmix) >= 1 and 'attributes' in vmix[0] and 'VMixOn' in vmix[0]['attributes'] and vmix[0]['attributes']['VMixOn'] is True:
+                print "VMix:ON"
+            elif vmix is not None and len(vmix) >= 1 and 'attributes' in vmix[0] and 'VMixOn' in vmix[0]['attributes'] and vmix[0]['attributes']['VMixOn'] is False:
+                print "VMix:OFF"
+
+        # VMix - On/Off State Set
+        if args.set_vmixstate and args.set_vmixstate == "ON":
+            device.setVMixChannelState(args.vmix_num, args.vmix_chnum, True)
+        elif args.set_vmixstate and args.set_vmixstate == "OFF":
+            device.setVMixChannelState(args.vmix_num, args.vmix_chnum, False)
+
+        # VMix - Gain Get
+        if args.get_vmixgain:
+            vmix = device.getVMixChannelState(args.vmix_num, args.vmix_chnum)
+            if vmix is not None and len(vmix) >= 1 and 'attributes' in vmix[0] and 'vmix_gain' in vmix[0]['attributes']:
+                print "VMixGain:" + str(vmix[0]['attributes']['vmix_gain'])
+
+        # VMix - Gain Set
+        if args.set_vmixgain is not None:
+            device.setVMixChannelGain(args.vmix_num, args.vmix_chnum, args.set_vmixgain)
 
     # Disconnect from the LWCP
     time.sleep(0.4)
